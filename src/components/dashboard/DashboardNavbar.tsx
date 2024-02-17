@@ -23,15 +23,15 @@ export const DashboardNavbar = ({ onSidebarOpen }: IProps) => {
   const router = useRouter()
 
   const onSignOut = useCallback(async () => {
-    const response = await fetcher("/api/auth", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      data: null,
-    })
+    // const response = await fetcher("/api/auth", {
+    //   method: "DELETE",
+    //   headers: { "Content-Type": "application/json" },
+    //   data: null,
+    // })
 
-    if (response.error) {
-      toast.error(response.error)
-    }
+    // if (response.error) {
+    //   toast.error(response.error)
+    // }
 
     toast.success("You have been signed out")
     mutate({ payload: null })

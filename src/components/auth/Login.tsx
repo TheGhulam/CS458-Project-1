@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useState } from "react"
-import { Box, Button, Container, Link, Paper, TextField, Typography } from "@mui/material"
+import { useEffect, useState } from "react"
+import { Box, Container, Paper, TextField, Typography } from "@mui/material"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 import { Status } from "@/types/status"
@@ -7,7 +7,7 @@ import { useFormik } from "formik"
 import { toFormikValidate } from "zod-formik-adapter"
 
 import SubmitButton from "../common/SubmitButton"
-import { UserModelSchemaType, UserRegistrationSchema, UserRegistrationSchemaType } from "@/schema/UserSchema"
+import { UserRegistrationSchema, UserRegistrationSchemaType } from "@/schema/UserSchema"
 import { useUser } from "@/lib/hooks/useUser"
 
 import { GoogleOAuthProvider } from "@react-oauth/google"
@@ -34,7 +34,6 @@ const Login = () => {
 
   const loginUser = async (data: Omit<UserRegistrationSchemaType, "name">) => {
     setStatus("loading")
-    // Check if the credentials match the hardcoded values
     // if (data.email === "test@gmail.com" && data.password === "Test?1234") {
     if (data.email === "test@gmail.com" && data.password === "1") {
       // Simulate a successful response
@@ -58,14 +57,14 @@ const Login = () => {
   const formik = useFormik({
     initialValues,
     validate: toFormikValidate(UserRegistrationSchema.omit({ name: true })),
-    onSubmit: (formValues) => {
+    onSubmit: (formValues: Omit<{ password: string; name: string; email: string }, "name">) => {
       loginUser(formValues)
     },
   })
 
   return (
 
-    <GoogleOAuthProvider clientId="620842454232-1gn4c0ri5jdk2e5eu3sr6oi7snlg0sr9.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="620842454232-1gn4c0ri5jdk2e5eu3sr6oi7snlg0sr9.apps.googleusercontent.com" children={undefined}>
 
       <Box
         component="main"
@@ -86,11 +85,11 @@ const Login = () => {
           >
             <form onSubmit={formik.handleSubmit}>
               <Box sx={{ my: 3 }}>
-                <Typography color="textPrimary" variant="h4">
-                  Sign in to CS458
-                </Typography>
-                <Typography color="textSecondary" gutterBottom variant="body2">
-                  Software Verification and Validation
+                <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
+                  <img alt="Logo" src="cs353-1.png" style={{ width: "50%" }} />
+                </Box>
+                <Typography align="center" color="textPrimary" variant="h4">
+                  Sign in
                 </Typography>
               </Box>
               <Box
@@ -137,10 +136,21 @@ const Login = () => {
                   isDisabled={!formik.isValid || status === "loading" || status === "success"}
                 />
               </Box>
-              <Box sx={{ pt: 2, pb: 1 }}>
-                <Typography align="center" variant="body1">
-                  Or sign in with Google
+              {/* Add a divider for normal login and google login */}
+              <Box sx={{ pb: 1, pt: 1 }}>
+                <Typography align="center" color="textSecondary" variant="body1">
+                  OR
                 </Typography>
+              </Box>
+              <Box
+                sx={{
+                  pt: 2,
+                  pb: 1,
+                  display: 'flex',       // Enables the flexbox layout
+                  justifyContent: 'center', // Centers the content horizontally
+                  alignItems: 'center',     // Centers the content vertically (optional, if you need vertical centering)
+                }}
+              >
                 <GoogleLogin
                   onSuccess={credentialResponse => {
                     handleGoogleLogin(credentialResponse);

@@ -1,6 +1,5 @@
 import nextConnect from "next-connect"
 import auths from "../../../lib/middlewares/auth"
-import { getMongoDb } from "../../../lib/mongodb"
 //import { deleteUser, updateUserById } from "../../../lib/queries/user"
 import { type NextApiRequest, type NextApiResponse } from "next"
 
