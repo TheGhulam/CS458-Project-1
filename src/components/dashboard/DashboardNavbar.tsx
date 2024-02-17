@@ -5,7 +5,6 @@ import { AppBar, Box, Button, IconButton, Toolbar, Tooltip } from "@mui/material
 import { toast } from "react-toastify"
 import { useRouter } from "next/router"
 import { useUser } from "@/lib/hooks/useUser"
-import MenuOpenIcon from "@mui/icons-material/MenuOpen"
 import ExitToAppIcon from "@mui/icons-material/ExitToApp"
 import { fetcher } from "@/lib/fetcher"
 
