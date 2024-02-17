@@ -1,17 +1,17 @@
 import { FormEvent, useEffect, useState } from "react"
 import { Box, Button, Container, Link, Paper, TextField, Typography } from "@mui/material"
-import NextLink from "next/link"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 import { Status } from "@/types/status"
 import { useFormik } from "formik"
 import { toFormikValidate } from "zod-formik-adapter"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
 import SubmitButton from "../common/SubmitButton"
 import { UserModelSchemaType, UserRegistrationSchema, UserRegistrationSchemaType } from "@/schema/UserSchema"
 import { useUser } from "@/lib/hooks/useUser"
 import { fetcher } from "@/lib/fetcher"
+
+import { GoogleLogin } from "@react-oauth/google"
 
 const initialValues = {
   name: "",
@@ -35,19 +35,16 @@ const Login = () => {
   const loginUser = async (data: Omit<UserRegistrationSchemaType, "name">) => {
     setStatus("loading")
 
-    const responseData = await fetcher<UserModelSchemaType, Omit<UserRegistrationSchemaType, "name">>("/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: data,
-    })
-
-    if (responseData.error) {
-      toast.error(responseData.error)
-      setStatus("error")
-      formik.resetForm()
+    // Check if the credentials match the hardcoded values
+    if (data.email === "test@gmail.com" && data.password === "Test?1234") {
+      // Simulate a successful response
+      const fakeUserPayload = { id: '1', email: 'test@gmail.com' }; // Mocked user object
+      mutate({ payload: fakeUserPayload }, false);
+      setStatus("success");
     } else {
-      mutate({ payload: responseData.payload }, false)
-      setStatus("success")
+      toast.error("Invalid credentials");
+      setStatus("error");
+      formik.resetForm();
     }
   }
 
@@ -77,13 +74,13 @@ const Login = () => {
             padding: 5,
           }}
         >
-          <NextLink href="/" passHref>
-            <Button startIcon={<ArrowBackIcon />}>Home</Button>
-          </NextLink>
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Sign in
+                Sign in to CS458
+              </Typography>
+              <Typography color="textSecondary" gutterBottom variant="body2">
+                Software Verification and Validation
               </Typography>
             </Box>
             <Box
@@ -130,23 +127,24 @@ const Login = () => {
                 isDisabled={!formik.isValid || status === "loading" || status === "success"}
               />
             </Box>
-          </form>
-          <NextLink href="/forgot-password" passHref>
-            Forgot password
-          </NextLink>
-          <div style={{ display: "flex" }}>
-            <Typography mt={1} mr={1} color="textSecondary" variant="body2">
-              Don&apos;t have an account?
-            </Typography>
-            <NextLink href="/register">
-              <Typography mt={1} color="textSecondary" variant="body2">
-                Register
+            <Box sx={{ pt: 2, pb: 1 }}>
+              <Typography align="center" variant="body1">
+                Or sign in with Google
               </Typography>
-            </NextLink>
-          </div>
+              <GoogleLogin
+                onSuccess={credentialResponse => {
+                  console.log(credentialResponse);
+                  // You can handle the Google login logic here
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+              />
+            </Box>
+          </form>
         </Paper>
       </Container>
-    </Box>
+    </Box >
   )
 }
 

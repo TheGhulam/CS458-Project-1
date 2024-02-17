@@ -16,7 +16,7 @@ const Home = ({ user }: IProps) => {
       }}
     >
       <Container maxWidth={false}>
-        <h1>Welcome to your dashboard: {user.name}</h1>
+        <h1>You are now logged in</h1>
       </Container>
     </Paper>
   )
