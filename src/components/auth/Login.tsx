@@ -9,7 +9,6 @@ import { toFormikValidate } from "zod-formik-adapter"
 import SubmitButton from "../common/SubmitButton"
 import { UserModelSchemaType, UserRegistrationSchema, UserRegistrationSchemaType } from "@/schema/UserSchema"
 import { useUser } from "@/lib/hooks/useUser"
-import { fetcher } from "@/lib/fetcher"
 
 import { GoogleLogin } from "@react-oauth/google"
 
@@ -34,9 +33,9 @@ const Login = () => {
 
   const loginUser = async (data: Omit<UserRegistrationSchemaType, "name">) => {
     setStatus("loading")
-
     // Check if the credentials match the hardcoded values
-    if (data.email === "test@gmail.com" && data.password === "Test?1234") {
+    // if (data.email === "test@gmail.com" && data.password === "Test?1234") {
+    if (data.email === "test@gmail.com" && data.password === "1") {
       // Simulate a successful response
       const fakeUserPayload = { id: '1', email: 'test@gmail.com' }; // Mocked user object
       mutate({ payload: fakeUserPayload }, false);
@@ -46,6 +45,13 @@ const Login = () => {
       setStatus("error");
       formik.resetForm();
     }
+  }
+
+  const handleGoogleLogin = async (credentialResponse: any) => {
+    setStatus("success");
+    console.log(credentialResponse);
+    const fakeUserPayload = { id: '1', email: 'test@gmail.com' };
+    mutate({ payload: fakeUserPayload }, false);
   }
 
   const formik = useFormik({
@@ -133,11 +139,10 @@ const Login = () => {
               </Typography>
               <GoogleLogin
                 onSuccess={credentialResponse => {
-                  console.log(credentialResponse);
-                  // You can handle the Google login logic here
+                  handleGoogleLogin(credentialResponse);
                 }}
                 onError={() => {
-                  console.log('Login Failed');
+                  toast.error("Google login failed");
                 }}
               />
             </Box>

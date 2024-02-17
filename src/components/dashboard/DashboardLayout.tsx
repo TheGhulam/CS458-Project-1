@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Box, CircularProgress, Container } from "@mui/material"
 import { styled } from "@mui/material/styles"
-import DashboardSidebar from "./DashboardSidebar"
 import { DashboardNavbar } from "./DashboardNavbar"
 import { useRouter } from "next/router"
 import { useUser } from "@/lib/hooks/useUser"
@@ -61,12 +60,6 @@ export const DashboardLayout = ({ children }: IProps) => {
         onSidebarOpen={() => {
           setSidebarOpen(true)
         }}
-      />
-      <DashboardSidebar
-        onClose={() => {
-          setSidebarOpen(false)
-        }}
-        open={isSidebarOpen}
       />
     </>
   )

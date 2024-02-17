@@ -59,20 +59,7 @@ export const DashboardNavbar = ({ onSidebarOpen }: IProps) => {
             px: 2,
           }}
         >
-          <IconButton
-            onClick={onSidebarOpen}
-            sx={{
-              display: {
-                xs: "inline-flex",
-                lg: "none",
-              },
-            }}
-          >
-            <MenuOpenIcon />
-          </IconButton>
-
           <Box sx={{ flexGrow: 1 }} />
-
           <Tooltip title="Sign out">
             <IconButton onClick={onSignOut} sx={{ ml: 1 }}>
               <ExitToAppIcon />
