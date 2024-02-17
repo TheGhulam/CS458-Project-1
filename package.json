@@ -50,5 +50,8 @@
     "typescript": "5.1.6",
     "zod": "^3.22.1",
     "zod-formik-adapter": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6"
   }
 }
