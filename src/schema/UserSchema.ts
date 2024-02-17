@@ -7,4 +7,13 @@ export const UserRegistrationSchema = z.object({
   password: z.string().min(1).max(100),
 })
 
+export const UserModelSchema = UserRegistrationSchema.extend({
+  _id: z.custom<ObjectId>().transform((id) => id.toString()),
+  about: z.string().min(1).max(2000).default(" "),
+  emailVerified: z.boolean().default(false),
+  createdAt: z.date().default(new Date()),
+})
+
 export type UserRegistrationSchemaType = z.infer<typeof UserRegistrationSchema>
+
+export type UserModelSchemaType = z.infer<typeof UserModelSchema>

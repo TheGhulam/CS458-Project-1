@@ -57,14 +57,14 @@ const Login = () => {
   const formik = useFormik({
     initialValues,
     validate: toFormikValidate(UserRegistrationSchema.omit({ name: true })),
-    onSubmit: (formValues: Omit<{ password: string; name: string; email: string }, "name">) => {
+    onSubmit: (formValues) => {
       loginUser(formValues)
     },
   })
 
   return (
 
-    <GoogleOAuthProvider clientId="620842454232-1gn4c0ri5jdk2e5eu3sr6oi7snlg0sr9.apps.googleusercontent.com" children={undefined}>
+    <GoogleOAuthProvider clientId="620842454232-1gn4c0ri5jdk2e5eu3sr6oi7snlg0sr9.apps.googleusercontent.com" >
 
       <Box
         component="main"
