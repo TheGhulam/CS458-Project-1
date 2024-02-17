@@ -10,6 +10,7 @@ import SubmitButton from "../common/SubmitButton"
 import { UserModelSchemaType, UserRegistrationSchema, UserRegistrationSchemaType } from "@/schema/UserSchema"
 import { useUser } from "@/lib/hooks/useUser"
 
+import { GoogleOAuthProvider } from "@react-oauth/google"
 import { GoogleLogin } from "@react-oauth/google"
 
 const initialValues = {
@@ -63,93 +64,97 @@ const Login = () => {
   })
 
   return (
-    <Box
-      component="main"
-      sx={{
-        alignItems: "center",
-        display: "flex",
-        flexGrow: 1,
-        minHeight: "100%",
-        marginTop: 20,
-      }}
-    >
-      <Container maxWidth="sm">
-        <Paper
-          elevation={20}
-          sx={{
-            padding: 5,
-          }}
-        >
-          <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ my: 3 }}>
-              <Typography color="textPrimary" variant="h4">
-                Sign in to CS458
-              </Typography>
-              <Typography color="textSecondary" gutterBottom variant="body2">
-                Software Verification and Validation
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                pb: 1,
-                pt: 1,
-              }}
-            >
-              <Typography align="center" color="textSecondary" variant="body1">
-                Login with your email address
-              </Typography>
-            </Box>
-            <TextField
-              fullWidth
-              label="Email Address"
-              margin="normal"
-              name="email"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.email}
-              type="email"
-              variant="outlined"
-              placeholder=""
-              helperText={(formik.touched.email && formik.errors.email) || " "}
-              error={Boolean(formik.touched.email && formik.errors.email)}
-            />
-            <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
-              fullWidth
-              helperText={formik.touched.password && formik.errors.password}
-              label="Password"
-              margin="normal"
-              name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="password"
-              value={formik.values.password}
-              variant="outlined"
-            />
-            <Box sx={{ py: 2 }}>
-              <SubmitButton
-                text="Sign in Now"
-                isLoading={status === "loading" || status === "success"}
-                isDisabled={!formik.isValid || status === "loading" || status === "success"}
-              />
-            </Box>
-            <Box sx={{ pt: 2, pb: 1 }}>
-              <Typography align="center" variant="body1">
-                Or sign in with Google
-              </Typography>
-              <GoogleLogin
-                onSuccess={credentialResponse => {
-                  handleGoogleLogin(credentialResponse);
+
+    <GoogleOAuthProvider clientId="620842454232-1gn4c0ri5jdk2e5eu3sr6oi7snlg0sr9.apps.googleusercontent.com">
+
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+          marginTop: 20,
+        }}
+      >
+        <Container maxWidth="sm">
+          <Paper
+            elevation={20}
+            sx={{
+              padding: 5,
+            }}
+          >
+            <form onSubmit={formik.handleSubmit}>
+              <Box sx={{ my: 3 }}>
+                <Typography color="textPrimary" variant="h4">
+                  Sign in to CS458
+                </Typography>
+                <Typography color="textSecondary" gutterBottom variant="body2">
+                  Software Verification and Validation
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  pb: 1,
+                  pt: 1,
                 }}
-                onError={() => {
-                  toast.error("Google login failed");
-                }}
+              >
+                <Typography align="center" color="textSecondary" variant="body1">
+                  Login with your email address
+                </Typography>
+              </Box>
+              <TextField
+                fullWidth
+                label="Email Address"
+                margin="normal"
+                name="email"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                type="email"
+                variant="outlined"
+                placeholder=""
+                helperText={(formik.touched.email && formik.errors.email) || " "}
+                error={Boolean(formik.touched.email && formik.errors.email)}
               />
-            </Box>
-          </form>
-        </Paper>
-      </Container>
-    </Box >
+              <TextField
+                error={Boolean(formik.touched.password && formik.errors.password)}
+                fullWidth
+                helperText={formik.touched.password && formik.errors.password}
+                label="Password"
+                margin="normal"
+                name="password"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                type="password"
+                value={formik.values.password}
+                variant="outlined"
+              />
+              <Box sx={{ py: 2 }}>
+                <SubmitButton
+                  text="Sign in Now"
+                  isLoading={status === "loading" || status === "success"}
+                  isDisabled={!formik.isValid || status === "loading" || status === "success"}
+                />
+              </Box>
+              <Box sx={{ pt: 2, pb: 1 }}>
+                <Typography align="center" variant="body1">
+                  Or sign in with Google
+                </Typography>
+                <GoogleLogin
+                  onSuccess={credentialResponse => {
+                    handleGoogleLogin(credentialResponse);
+                  }}
+                  onError={() => {
+                    toast.error("Google login failed");
+                  }}
+                />
+              </Box>
+            </form>
+          </Paper>
+        </Container>
+      </Box >
+    </GoogleOAuthProvider>
   )
 }
 
