@@ -19,7 +19,6 @@ Here's a brief look at some key technologies used in this project:
 - 🔐 **Passport:** Manages user authentication with various strategies, including local.
 - 📝 **Formik & Zod:** Handle and validate forms, making sure the data is correct.
 - 📊 **SWR & Axios:** Deal with data fetching and state management.
-- 🔒 **bcryptjs:** Secures user passwords by hashing them.
 - 📧 **nodemailer:** Sends emails for things like verification and password resets.
 - ⚙️ **next-connect:** A small Express/Connect-style middleware framework for Next.js, facilitating efficient handling of server-side routes and middleware.
 - 🗄️ **MongoDB:** The chosen database for this project, utilized for storing user information and managing sessions.
