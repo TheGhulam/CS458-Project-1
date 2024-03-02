@@ -12,44 +12,44 @@ class LoginTestCases(unittest.TestCase):
         self.driver = webdriver.Edge()
         self.driver.get("https://cs458.netlify.app/")
 
-    # def test_successful_login(self):
-    #     """Test user can login successfully with correct credentials."""
-    #     driver = self.driver
-    #     driver.find_element(By.NAME, "email").send_keys("test@gmail.com")
-    #     driver.find_element(By.NAME, "password").send_keys("1")
-    #     driver.find_element(By.XPATH, "//button[contains(text(),'Sign in Now')]").click()
-    #     WebDriverWait(driver, 10).until(EC.url_contains("/home")) 
+    def test_successful_login(self):
+        """Test user can login successfully with correct credentials."""
+        driver = self.driver
+        driver.find_element(By.NAME, "email").send_keys("test@gmail.com")
+        driver.find_element(By.NAME, "password").send_keys("1")
+        driver.find_element(By.XPATH, "//button[contains(text(),'Sign in Now')]").click()
+        WebDriverWait(driver, 10).until(EC.url_contains("/home")) 
 
-    # def test_invalid_login(self):
-    #     """Test system behavior with invalid login credentials."""
-    #     driver = self.driver
-    #     driver.find_element(By.NAME, "email").send_keys("wrong@example.com")
-    #     driver.find_element(By.NAME, "password").send_keys("wrongpassword")
-    #     driver.find_element(By.XPATH, "//button[contains(text(),'Sign in Now')]").click()
+    def test_invalid_login(self):
+        """Test system behavior with invalid login credentials."""
+        driver = self.driver
+        driver.find_element(By.NAME, "email").send_keys("wrong@example.com")
+        driver.find_element(By.NAME, "password").send_keys("wrongpassword")
+        driver.find_element(By.XPATH, "//button[contains(text(),'Sign in Now')]").click()
         
-    #     # Wait for the toast message to become visible
-    #     WebDriverWait(driver, 10).until(
-    #     EC.visibility_of_element_located((By.XPATH, "//div[contains(@class,'Toastify__toast--error')]"))
-    #     )
-    #     error_message = driver.find_element(By.XPATH, "//div[contains(@class,'Toastify__toast--error')]")
-    #     self.assertIn("Invalid credentials", error_message.text)
+        # Wait for the toast message to become visible
+        WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.XPATH, "//div[contains(@class,'Toastify__toast--error')]"))
+        )
+        error_message = driver.find_element(By.XPATH, "//div[contains(@class,'Toastify__toast--error')]")
+        self.assertIn("Invalid credentials", error_message.text)
 
 
-    # def test_empty_fields(self):
-    #     """Test validation messages for empty fields."""
-    #     driver = self.driver
-    #     driver.find_element(By.XPATH, "//button[contains(text(),'Sign in Now')]").click()
+    def test_empty_fields(self):
+        """Test validation messages for empty fields."""
+        driver = self.driver
+        driver.find_element(By.XPATH, "//button[contains(text(),'Sign in Now')]").click()
 
-    #     email_error = WebDriverWait(driver, 10).until(
-    #         EC.visibility_of_element_located((By.CSS_SELECTOR, "p.MuiFormHelperText-root.Mui-error"))
-    #     )
-    #     self.assertIn("Invalid email", email_error.text)
+        email_error = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "p.MuiFormHelperText-root.Mui-error"))
+        )
+        self.assertIn("Invalid email", email_error.text)
 
-    #     all_errors = WebDriverWait(driver, 10).until(
-    #         EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "p.MuiFormHelperText-root.Mui-error"))
-    #     )
-    #     password_error = all_errors[1] if len(all_errors) > 1 else None
-    #     self.assertIn("String must contain at least 1 character(s)", password_error.text if password_error else "")
+        all_errors = WebDriverWait(driver, 10).until(
+            EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "p.MuiFormHelperText-root.Mui-error"))
+        )
+        password_error = all_errors[1] if len(all_errors) > 1 else None
+        self.assertIn("String must contain at least 1 character(s)", password_error.text if password_error else "")
 
 
     def test_google_login(self):
@@ -87,13 +87,13 @@ class LoginTestCases(unittest.TestCase):
         WebDriverWait(driver, 10).until(EC.url_contains("/home")) 
 
 
-    # def test_ui_elements_presence(self):
-    #     """Check all UI elements are present."""
-    #     driver = self.driver
-    #     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "email")))
-    #     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "password")))
-    #     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(),'Sign in Now')]")))
-    #     # Add more checks for other elements as needed
+    def test_ui_elements_presence(self):
+        """Check all UI elements are present."""
+        driver = self.driver
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "email")))
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "password")))
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(),'Sign in Now')]")))
+        # Add more checks for other elements as needed
 
     def tearDown(self):
         """Tear down the test environment after each test."""
