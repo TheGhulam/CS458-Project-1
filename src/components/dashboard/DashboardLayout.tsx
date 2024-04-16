@@ -53,7 +53,11 @@ export const DashboardLayout = ({ children }: IProps) => {
           {children}
         </Box>
       </DashboardLayoutRoot>
-      <DashboardNavbar />
+      <DashboardNavbar
+        onSidebarOpen={() => {
+          setSidebarOpen(true)
+        }}
+      />
     </>
   )
 }

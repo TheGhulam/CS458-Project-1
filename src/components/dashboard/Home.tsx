@@ -13,6 +13,9 @@ interface SeaLocation {
   longitude: number
 }
 
+let userlat = 0;
+let userlong = 0;
+
 const nearestSeas: SeaLocation[] = [
   { name: "Black Sea", latitude: 43.3, longitude: 34.0 },
   { name: "Marmara Sea", latitude: 40.7, longitude: 28.0 },
@@ -42,9 +45,9 @@ const Home = ({ user }: IProps) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const userLatitude = position.coords.latitude
-          user.latitude = userLatitude
+          userlat = userLatitude
           const userLongitude = position.coords.longitude
-          user.longitude = userLongitude
+          userlong = userLongitude
 
           let minDistance = Infinity
           let closestSea: SeaLocation | null = null
@@ -96,7 +99,7 @@ const Home = ({ user }: IProps) => {
           Nearest Sea
         </Typography>
         <Typography variant='caption' gutterBottom>
-          based on your location ({user.latitude}, {user.longitude})
+          based on your location ({userlat}, {userlong})
         </Typography>
         {nearestSea && distance && (
           <Typography variant="body1" marginTop={5}>
