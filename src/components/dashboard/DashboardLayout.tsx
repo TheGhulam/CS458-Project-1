@@ -10,9 +10,9 @@ const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   flex: "1 1 auto",
   maxWidth: "100%",
   paddingTop: 20,
-  [theme.breakpoints.up("lg")]: {
-    paddingLeft: 280,
-  },
+  // [theme.breakpoints.up("lg")]: {
+  //   paddingLeft: 280,
+  // },
 }))
 
 interface IProps {

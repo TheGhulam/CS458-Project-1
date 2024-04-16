@@ -40,12 +40,12 @@ export const DashboardNavbar = ({ onSidebarOpen }: IProps) => {
     <>
       <DashboardNavbarRoot
         sx={{
-          left: {
-            lg: 270,
-          },
-          width: {
-            lg: "calc(100% - 270px)",
-          },
+          // left: {
+          //   lg: 270,
+          // },
+          // width: {
+          //   lg: "calc(100% - 270px)",
+          // },
         }}
       >
         <Toolbar
