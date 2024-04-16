@@ -59,7 +59,7 @@ const Home1 = () => {
     >
       <Container maxWidth={false}>
         <Typography variant="h4" gutterBottom>
-          Calculate Distance to Sun's Core
+          Calculate Distance to Sun&apos;s Core
         </Typography>
         <TextField
           label="Latitude"
@@ -80,7 +80,7 @@ const Home1 = () => {
         </Button>
         {distance && (
           <Typography variant="body1" mt={2}>
-            The distance to the Sun's core is approximately {distance.toFixed(2)} kilometers.
+            The distance to the Sun&apos;s core is approximately {distance.toFixed(2)} kilometers.
           </Typography>
         )}
       </Container>
