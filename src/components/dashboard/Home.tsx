@@ -1,6 +1,7 @@
 import { UserModelSchemaType } from "@/schema/UserSchema"
 import React, { useEffect, useState } from "react"
-import { Container, Paper, Typography } from "@mui/material"
+import { Button, Container, Paper, Typography } from "@mui/material"
+import Link from "next/link"
 
 interface IProps {
   user: Omit<UserModelSchemaType, "password">
@@ -83,27 +84,45 @@ const Home = ({ user }: IProps) => {
   }
 
   return (
-    <Paper
-      sx={{
-        flexGrow: 1,
-        py: 5,
-        marginTop: 10,
-      }}
-    >
-      <Container maxWidth={false}>
-        <Typography variant="h4" >
-          Nearest Sea
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          based on your location ({user.latitude}, {user.longitude})
-        </Typography>
-        {nearestSea && distance && (
-          <Typography variant="body1">
-            The nearest sea is {nearestSea.name}, approximately {distance.toFixed(2)} kilometers away.
+    <Container>
+
+      <Paper
+        sx={{
+          flexGrow: 1,
+          py: 5,
+          marginTop: 10,
+        }}
+      >
+        <Container maxWidth={false}>
+          <Typography variant="h4" >
+            Nearest Sea
           </Typography>
-        )}
-      </Container>
-    </Paper>
+          <Typography variant="body1" gutterBottom>
+            based on your location ({user.latitude}, {user.longitude})
+          </Typography>
+          {nearestSea && distance && (
+            <Typography variant="body1">
+              The nearest sea is {nearestSea.name}, approximately {distance.toFixed(2)} kilometers away.
+            </Typography>
+          )}
+        </Container>
+      </Paper>
+      <Paper
+        sx={{
+          flexGrow: 1,
+          py: 5,
+          marginTop: 10,
+        }}
+      >
+        <Container>
+          <Link href="/home1" passHref>
+            <Button variant="contained" color="primary">
+              Calculate Distance to Sun's Core
+            </Button>
+          </Link>
+        </Container>
+      </Paper>
+    </Container>
   )
 }
 
