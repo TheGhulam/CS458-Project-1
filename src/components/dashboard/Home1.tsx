@@ -41,7 +41,6 @@ const Home1 = () => {
 
   const getSunPosition = () => {
     // Calculate the position of the Sun based on the current date and time
-    // You can use astronomical formulas or libraries to get a more accurate position
     // For simplicity, let's assume a fixed position for the Sun
     return { latitude: 0, longitude: 0 }
   }
