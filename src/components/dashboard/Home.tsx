@@ -84,45 +84,27 @@ const Home = ({ user }: IProps) => {
   }
 
   return (
-    <Container>
-
-      <Paper
-        sx={{
-          flexGrow: 1,
-          py: 5,
-          marginTop: 10,
-        }}
-      >
-        <Container maxWidth={false}>
-          <Typography variant="h4" >
-            Nearest Sea
+    <Paper
+      sx={{
+        flexGrow: 1,
+        py: 5,
+        marginTop: 10,
+      }}
+    >
+      <Container maxWidth={false}>
+        <Typography variant="h4" >
+          Nearest Sea
+        </Typography>
+        <Typography variant='caption' gutterBottom>
+          based on your location ({user.latitude}, {user.longitude})
+        </Typography>
+        {nearestSea && distance && (
+          <Typography variant="body1" marginTop={5}>
+            The nearest sea is {nearestSea.name}, approximately {distance.toFixed(2)} kilometers away.
           </Typography>
-          <Typography variant="body1" gutterBottom>
-            based on your location ({user.latitude}, {user.longitude})
-          </Typography>
-          {nearestSea && distance && (
-            <Typography variant="body1">
-              The nearest sea is {nearestSea.name}, approximately {distance.toFixed(2)} kilometers away.
-            </Typography>
-          )}
-        </Container>
-      </Paper>
-      <Paper
-        sx={{
-          flexGrow: 1,
-          py: 5,
-          marginTop: 10,
-        }}
-      >
-        <Container>
-          <Link href="/home1" passHref>
-            <Button variant="contained" color="primary">
-              Calculate Distance to Sun's Core
-            </Button>
-          </Link>
-        </Container>
-      </Paper>
-    </Container>
+        )}
+      </Container>
+    </Paper>
   )
 }
 
