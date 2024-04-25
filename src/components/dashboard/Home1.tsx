@@ -5,6 +5,7 @@ const Home1 = () => {
   const [latitude, setLatitude] = useState<number | null>(null)
   const [longitude, setLongitude] = useState<number | null>(null)
   const [distance, setDistance] = useState<number | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -15,13 +16,26 @@ const Home1 = () => {
         },
         (error) => {
           console.error("Error getting user location:", error)
+          setError("Error getting user location. Please enter latitude and longitude manually.")
         }
       )
+    } else {
+      setError("Geolocation is not supported by this browser.")
     }
   }, [])
 
   const calculateDistance = () => {
     if (latitude && longitude) {
+      if (isNaN(latitude) || isNaN(longitude)) {
+        setError("Invalid latitude or longitude. Please enter valid numbers.")
+        return
+      }
+
+      if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+        setError("Latitude must be between -90 and 90, and longitude must be between -180 and 180.")
+        return
+      }
+
       const sunPosition = getSunPosition()
       const earthRadius = 6371 // in kilometers
       const sunRadius = 695700 // in kilometers
@@ -31,11 +45,15 @@ const Home1 = () => {
       const dLon = deg2rad(sunPosition.longitude - longitude)
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(deg2rad(latitude)) * Math.cos(deg2rad(sunPosition.latitude)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        Math.cos(deg2rad(latitude)) * Math.cos(deg2rad(sunPosition.latitude)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2)
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
       const distance = astronomicalUnit - earthRadius - sunRadius + earthRadius * c
 
       setDistance(distance)
+      setError(null)
+    } else {
+      setError("Please enter latitude and longitude.")
     }
   }
 
@@ -61,6 +79,11 @@ const Home1 = () => {
         <Typography variant="h4" gutterBottom>
           Calculate Distance to Sun&apos;s Core
         </Typography>
+        {error && (
+          <Typography variant="body1" color="error" mb={2}>
+            {error}
+          </Typography>
+        )}
         <TextField
           label="Latitude"
           value={latitude || ""}
