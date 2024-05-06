@@ -30,7 +30,6 @@ const Home1 = () => {
         setError("Invalid latitude or longitude. Please enter valid numbers.")
         return
       }
-
       if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
         setError("Latitude must be between -90 and 90, and longitude must be between -180 and 180.")
         return
@@ -38,8 +37,7 @@ const Home1 = () => {
 
       const sunPosition = getSunPosition()
       const earthRadius = 6371 // in kilometers
-      const sunRadius = 695700 // in kilometers
-      const astronomicalUnit = 149.6e6 // in kilometers
+      const astronomicalUnit = getEarthSunDistance() // in kilometers
 
       const dLat = deg2rad(sunPosition.latitude - latitude)
       const dLon = deg2rad(sunPosition.longitude - longitude)
@@ -48,7 +46,7 @@ const Home1 = () => {
         Math.cos(deg2rad(latitude)) * Math.cos(deg2rad(sunPosition.latitude)) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2)
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-      const distance = astronomicalUnit - earthRadius - sunRadius + earthRadius * c
+      const distance = astronomicalUnit + earthRadius * c
 
       setDistance(distance)
       setError(null)
@@ -58,9 +56,21 @@ const Home1 = () => {
   }
 
   const getSunPosition = () => {
-    // Calculate the position of the Sun based on the current date and time
-    // For simplicity, let's assume a fixed position for the Sun
-    return { latitude: 0, longitude: 0 }
+    return { latitude: 0, longitude: longitude || 0 }
+  }
+
+  const getEarthSunDistance = () => {
+    const currentDate = new Date()
+    const januaryFirst = new Date(currentDate.getFullYear(), 0, 1)
+    const dayOfYear = Math.floor((currentDate.getTime() - januaryFirst.getTime()) / (1000 * 60 * 60 * 24))
+
+    const deg2rad = (deg: number) => deg * (Math.PI / 180)
+    const orbitalEccentricity = 0.0167
+    const orbitalRadius = 149.6e6 // in kilometers
+    const orbitalAngle = deg2rad((360 / 365.25) * dayOfYear)
+    const distanceFromSun = orbitalRadius * (1 - orbitalEccentricity * orbitalEccentricity) / (1 + orbitalEccentricity * Math.cos(orbitalAngle))
+
+    return distanceFromSun
   }
 
   const deg2rad = (deg: number) => {
@@ -77,7 +87,7 @@ const Home1 = () => {
     >
       <Container maxWidth={false}>
         <Typography variant="h4" gutterBottom>
-          Calculate Distance to Sun&apos;s Core
+          Calculate Distance to Sun
         </Typography>
         {error && (
           <Typography variant="body1" color="error" mb={2}>
@@ -103,7 +113,7 @@ const Home1 = () => {
         </Button>
         {distance && (
           <Typography variant="body1" mt={2}>
-            The distance to the Sun&apos;s core is approximately {distance.toFixed(2)} kilometers.
+            The distance to the Sun is approximately {distance.toFixed(1)} kilometers.
           </Typography>
         )}
       </Container>
